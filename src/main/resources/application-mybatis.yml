@@ -1,0 +1,4 @@
+spring:
+  mybatis:
+    #mapperLocations: classpath:com/soft/dao/*.xml
+    typeAliasesPackage: com.soft.beans

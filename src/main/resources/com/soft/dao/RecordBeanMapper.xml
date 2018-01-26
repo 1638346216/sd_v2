@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soft.dao.RecordBeanMapper">
+  <resultMap id="BaseResultMap" type="com.soft.beans.RecordBean">
+    <id column="recordId" jdbcType="VARCHAR" property="recordId" />
+    <result column="userId" jdbcType="VARCHAR" property="userId" />
+    <result column="used" jdbcType="DOUBLE" property="used" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="modiTime" jdbcType="TIMESTAMP" property="modiTime" />
+    <result column="remain" jdbcType="DECIMAL" property="remain" />
+    <result column="operatorId" jdbcType="VARCHAR" property="operatorId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    recordId, userId, used, money, modiTime, remain, operatorId
+  </sql>
+  
+  <!-- ========================================================================= -->
+  <!-- 用户查询详单 -->
+	 <select id="queryRecord" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from record
+    where userId = #{userId,jdbcType=VARCHAR} order by modiTime desc
+  </select>
+  <!-- 折线图 -->
+   <select id="select4ZheXianTu" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from record
+    where userId = #{userId,jdbcType=VARCHAR} AND used > 0 order by modiTime desc LIMIT 0,7
+  </select>
+
+ 
+	<!-- ========================================================================= -->
+  
+  
+  
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from record
+    where recordId = #{recordId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from record
+    where recordId = #{recordId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.soft.beans.RecordBean">
+    insert into record (recordId, userId, used, 
+      money, modiTime, remain, 
+      operatorId)
+    values (#{recordId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{used,jdbcType=DOUBLE}, 
+      #{money,jdbcType=DECIMAL}, #{modiTime,jdbcType=TIMESTAMP}, #{remain,jdbcType=DECIMAL}, 
+      #{operatorId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.soft.beans.RecordBean">
+    insert into record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recordId != null">
+        recordId,
+      </if>
+      <if test="userId != null">
+        userId,
+      </if>
+      <if test="used != null">
+        used,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="modiTime != null">
+        modiTime,
+      </if>
+      <if test="remain != null">
+        remain,
+      </if>
+      <if test="operatorId != null">
+        operatorId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recordId != null">
+        #{recordId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="used != null">
+        #{used,jdbcType=DOUBLE},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="modiTime != null">
+        #{modiTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remain != null">
+        #{remain,jdbcType=DECIMAL},
+      </if>
+      <if test="operatorId != null">
+        #{operatorId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.soft.beans.RecordBean">
+    update record
+    <set>
+      <if test="userId != null">
+        userId = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="used != null">
+        used = #{used,jdbcType=DOUBLE},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="modiTime != null">
+        modiTime = #{modiTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remain != null">
+        remain = #{remain,jdbcType=DECIMAL},
+      </if>
+      <if test="operatorId != null">
+        operatorId = #{operatorId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where recordId = #{recordId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.soft.beans.RecordBean">
+    update record
+    set userId = #{userId,jdbcType=VARCHAR},
+      used = #{used,jdbcType=DOUBLE},
+      money = #{money,jdbcType=DECIMAL},
+      modiTime = #{modiTime,jdbcType=TIMESTAMP},
+      remain = #{remain,jdbcType=DECIMAL},
+      operatorId = #{operatorId,jdbcType=VARCHAR}
+    where recordId = #{recordId,jdbcType=VARCHAR}
+  </update>
+</mapper>

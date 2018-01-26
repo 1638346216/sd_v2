@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soft.dao.UserBeanMapper">
+	<resultMap id="BaseResultMap" type="com.soft.beans.UserBean">
+		<id column="userId" jdbcType="VARCHAR" property="userId" />
+		<result column="userName" jdbcType="VARCHAR" property="userName" />
+		<result column="userPsw" jdbcType="VARCHAR" property="userPsw" />
+		<result column="userSex" jdbcType="CHAR" property="userSex" />
+		<result column="userTel" jdbcType="CHAR" property="userTel" />
+		<result column="userCard" jdbcType="CHAR" property="userCard" />
+		<result column="userCity" jdbcType="VARCHAR" property="userCity" />
+		<result column="userArea" jdbcType="VARCHAR" property="userArea" />
+		<result column="userDetailAddr" jdbcType="VARCHAR" property="userDetailAddr" />
+		<result column="userCreate" jdbcType="TIMESTAMP" property="userCreate" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		userId, userName, userPsw, userSex, userTel, userCard,
+		userCity, userArea,
+		userDetailAddr,
+		userCreate
+	</sql>
+
+	<!-- ========================================================================= -->
+	<!-- ===登录查询=== -->
+
+	<select id="loginQuery" parameterType="com.soft.beans.LoginBean"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		where (userTel = #{loginName,jdbcType=CHAR} or userId =
+		#{loginName,jdbcType=VARCHAR}) and userPsw =
+		#{loginPsw,jdbcType=VARCHAR}
+	</select>
+
+	<select id="QueryUserList" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user
+	</select>
+
+
+
+
+
+
+	<!-- ========================================================================= -->
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		where userId = #{userId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from user
+		where userId = #{userId,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.soft.beans.UserBean">
+		insert into user (userId,
+		userName, userPsw,
+		userSex, userTel, userCard,
+		userCity, userArea,
+		userDetailAddr,
+		userCreate)
+		values (#{userId,jdbcType=VARCHAR},
+		#{userName,jdbcType=VARCHAR},
+		#{userPsw,jdbcType=VARCHAR},
+		#{userSex,jdbcType=CHAR}, #{userTel,jdbcType=CHAR},
+		#{userCard,jdbcType=CHAR},
+		#{userCity,jdbcType=VARCHAR},
+		#{userArea,jdbcType=VARCHAR},
+		#{userDetailAddr,jdbcType=VARCHAR},
+		#{userCreate,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.soft.beans.UserBean">
+		insert into user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				userId,
+			</if>
+			<if test="userName != null">
+				userName,
+			</if>
+			<if test="userPsw != null">
+				userPsw,
+			</if>
+			<if test="userSex != null">
+				userSex,
+			</if>
+			<if test="userTel != null">
+				userTel,
+			</if>
+			<if test="userCard != null">
+				userCard,
+			</if>
+			<if test="userCity != null">
+				userCity,
+			</if>
+			<if test="userArea != null">
+				userArea,
+			</if>
+			<if test="userDetailAddr != null">
+				userDetailAddr,
+			</if>
+			<if test="userCreate != null">
+				userCreate,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userPsw != null">
+				#{userPsw,jdbcType=VARCHAR},
+			</if>
+			<if test="userSex != null">
+				#{userSex,jdbcType=CHAR},
+			</if>
+			<if test="userTel != null">
+				#{userTel,jdbcType=CHAR},
+			</if>
+			<if test="userCard != null">
+				#{userCard,jdbcType=CHAR},
+			</if>
+			<if test="userCity != null">
+				#{userCity,jdbcType=VARCHAR},
+			</if>
+			<if test="userArea != null">
+				#{userArea,jdbcType=VARCHAR},
+			</if>
+			<if test="userDetailAddr != null">
+				#{userDetailAddr,jdbcType=VARCHAR},
+			</if>
+			<if test="userCreate != null">
+				#{userCreate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.soft.beans.UserBean">
+		update user
+		<set>
+			<if test="userName != null">
+				userName = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userPsw != null">
+				userPsw = #{userPsw,jdbcType=VARCHAR},
+			</if>
+			<if test="userSex != null">
+				userSex = #{userSex,jdbcType=CHAR},
+			</if>
+			<if test="userTel != null">
+				userTel = #{userTel,jdbcType=CHAR},
+			</if>
+			<if test="userCard != null">
+				userCard = #{userCard,jdbcType=CHAR},
+			</if>
+			<if test="userCity != null">
+				userCity = #{userCity,jdbcType=VARCHAR},
+			</if>
+			<if test="userArea != null">
+				userArea = #{userArea,jdbcType=VARCHAR},
+			</if>
+			<if test="userDetailAddr != null">
+				userDetailAddr = #{userDetailAddr,jdbcType=VARCHAR},
+			</if>
+			<if test="userCreate != null">
+				userCreate = #{userCreate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where userId = #{userId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.soft.beans.UserBean">
+		update user
+		set
+		userName = #{userName,jdbcType=VARCHAR},
+		userPsw =
+		#{userPsw,jdbcType=VARCHAR},
+		userSex = #{userSex,jdbcType=CHAR},
+		userTel = #{userTel,jdbcType=CHAR},
+		userCard =
+		#{userCard,jdbcType=CHAR},
+		userCity = #{userCity,jdbcType=VARCHAR},
+		userArea = #{userArea,jdbcType=VARCHAR},
+		userDetailAddr =
+		#{userDetailAddr,jdbcType=VARCHAR},
+		userCreate =
+		#{userCreate,jdbcType=TIMESTAMP}
+		where userId =
+		#{userId,jdbcType=VARCHAR}
+	</update>
+</mapper>

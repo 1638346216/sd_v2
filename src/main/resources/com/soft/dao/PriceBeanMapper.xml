@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soft.dao.PriceBeanMapper">
+  <resultMap id="BaseResultMap" type="com.soft.beans.PriceBean">
+    <result column="elecPrice" jdbcType="DECIMAL" property="elecPrice" />
+  </resultMap>
+  
+  <select id="price" resultType="java.lang.Double">
+  select elecPrice from price
+  </select>
+  <insert id="insert" parameterType="com.soft.beans.PriceBean">
+    insert into price (elecPrice)
+    values (#{elecPrice,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.soft.beans.PriceBean">
+    insert into price
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="elecPrice != null">
+        elecPrice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="elecPrice != null">
+        #{elecPrice,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+</mapper>
